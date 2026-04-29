@@ -21,13 +21,17 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const { v4: uuidv4 } = require('uuid');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const logger = require('./services/loggerService');
 const { stats: cacheStats } = require('./services/cacheService');
 
 // ── Startup validation ─────────────────────────────────────────────────────
 if (!process.env.GEMINI_API_KEY) {
-  logger.error('FATAL: GEMINI_API_KEY is not set. Copy backend/.env.example to backend/.env and add your key.');
+  logger.error(
+    'FATAL: GEMINI_API_KEY is not set. Copy backend/.env.example to backend/.env and add your key.'
+  );
   process.exit(1);
 }
 
@@ -53,48 +57,60 @@ app.use((req, res, next) => {
 });
 
 // ── Security headers (Helmet + CSP) ───────────────────────────────────────
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: IS_PROD ? [] : null
-    }
-  },
-  crossOriginResourcePolicy: { policy: 'cross-origin' }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: IS_PROD ? [] : null,
+      },
+    },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
 
 // ── Structured HTTP logging ────────────────────────────────────────────────
-morgan.token('request-id', req => req.requestId);
-app.use(morgan(
-  IS_PROD
-    ? ':method :url :status :res[content-length] :response-time ms id=:request-id'
-    : 'dev'
-));
+morgan.token('request-id', (req) => req.requestId);
+app.use(
+  morgan(
+    IS_PROD ? ':method :url :status :res[content-length] :response-time ms id=:request-id' : 'dev'
+  )
+);
 
 // ── CORS ───────────────────────────────────────────────────────────────────
 const rawOrigins = process.env.FRONTEND_URL || 'http://localhost:3000';
-const allowedOrigins = rawOrigins.split(',').map(o => o.trim()).filter(Boolean);
+const allowedOrigins = rawOrigins
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
 
-app.use(cors({
-  origin: (origin, cb) => {
-    // Allow Postman/curl (no origin) in development only
-    if (!origin) return IS_PROD ? cb(new Error('CORS: direct access not allowed in production')) : cb(null, true);
-    if (allowedOrigins.includes(origin)) return cb(null, true);
-    cb(new Error(`CORS: origin '${origin}' not in allowlist`));
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'X-Api-Key']
-}));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      // Allow Postman/curl (no origin) in development only
+      if (!origin)
+        return IS_PROD
+          ? cb(new Error('CORS: direct access not allowed in production'))
+          : cb(null, true);
+      if (allowedOrigins.includes(origin)) return cb(null, true);
+      cb(new Error(`CORS: origin '${origin}' not in allowlist`));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'X-Api-Key'],
+  })
+);
 
-// ── Body parsing ───────────────────────────────────────────────────────────
+// ── Body parsing & sanitization ────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }));
+app.use(xss()); // Sanitize user input coming from POST body, GET queries, and url params
+app.use(hpp()); // Prevent HTTP Parameter Pollution
 
 // ── Optional API key authentication ───────────────────────────────────────
 // Set BACKEND_API_KEY in .env to require all API callers to send
@@ -106,7 +122,11 @@ if (BACKEND_API_KEY) {
     if (req.path === '/health') return next();
     const provided = req.headers['x-api-key'];
     if (!provided || provided !== BACKEND_API_KEY) {
-      logger.warn('Unauthorized API access attempt', { requestId: req.requestId, ip: req.ip, path: req.path });
+      logger.warn('Unauthorized API access attempt', {
+        requestId: req.requestId,
+        ip: req.ip,
+        path: req.path,
+      });
       return res.status(401).json({ error: 'Unauthorized: missing or invalid X-Api-Key header' });
     }
     next();
@@ -120,12 +140,16 @@ const generalLimiter = rateLimit({
   max: 200,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: req => req.ip,
+  keyGenerator: (req) => req.ip,
   message: { error: 'Too many requests. Please wait before trying again.' },
   handler: (req, res, next, options) => {
-    logger.warn('Rate limit hit (general)', { requestId: req.requestId, ip: req.ip, path: req.path });
+    logger.warn('Rate limit hit (general)', {
+      requestId: req.requestId,
+      ip: req.ip,
+      path: req.path,
+    });
     res.status(429).json(options.message);
-  }
+  },
 });
 
 // AI-specific: 30 req/15min per IP (prevents Anthropic quota exhaustion)
@@ -134,12 +158,14 @@ const aiLimiter = rateLimit({
   max: 30,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: req => req.ip,
-  message: { error: 'AI rate limit reached. Please wait a few minutes before making another AI request.' },
+  keyGenerator: (req) => req.ip,
+  message: {
+    error: 'AI rate limit reached. Please wait a few minutes before making another AI request.',
+  },
   handler: (req, res, next, options) => {
     logger.warn('Rate limit hit (AI)', { requestId: req.requestId, ip: req.ip, path: req.path });
     res.status(429).json(options.message);
-  }
+  },
 });
 
 app.use('/api/', generalLimiter);
@@ -163,7 +189,7 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     env: NODE_ENV,
     uptime: Math.floor(process.uptime()),
-    version: process.env.npm_package_version || '1.0.0'
+    version: process.env.npm_package_version || '1.0.0',
   });
 });
 
@@ -185,13 +211,13 @@ app.use((err, req, res, next) => {
     method: req.method,
     path: req.path,
     message: err.message,
-    status: err.status
+    status: err.status,
   });
 
   res.status(err.status || 500).json({
     error: err.message || 'Internal server error',
     requestId: req.requestId,
-    ...(IS_PROD ? {} : { stack: err.stack })
+    ...(IS_PROD ? {} : { stack: err.stack }),
   });
 });
 
@@ -201,7 +227,7 @@ const server = app.listen(PORT, () => {
     port: PORT,
     env: NODE_ENV,
     corsOrigins: allowedOrigins,
-    apiKeyAuth: !!BACKEND_API_KEY
+    apiKeyAuth: !!BACKEND_API_KEY,
   });
 });
 

@@ -28,7 +28,7 @@ router.post('/message', async (req, res, next) => {
     // Auto-detect language from the user's last message via Google Cloud Translation API
     // This allows the AI to respond in the language the user is writing in.
     let resolvedLanguage = language;
-    const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
     if (lastUserMsg && language === 'en') {
       const detected = await detectLanguage(lastUserMsg.content, req.requestId);
       if (detected.language === 'hi' && detected.confidence > 0.7) {
@@ -37,7 +37,10 @@ router.post('/message', async (req, res, next) => {
     }
 
     const reply = await chatWithCoach(messages, userContext || {}, resolvedLanguage, req.requestId);
-    res.json({ success: true, data: { reply, timestamp: new Date().toISOString(), detectedLanguage: resolvedLanguage } });
+    res.json({
+      success: true,
+      data: { reply, timestamp: new Date().toISOString(), detectedLanguage: resolvedLanguage },
+    });
   } catch (error) {
     next(error);
   }
@@ -54,15 +57,15 @@ router.get('/suggestions', (req, res) => {
       'What is the Model Code of Conduct?',
       'Can I vote if I moved to a new city?',
       'What happens if my name is not on the voter list?',
-      'How can I check my voter registration status?'
+      'How can I check my voter registration status?',
     ],
     hi: [
       'मतदाता पंजीकरण कैसे करें?',
       'मतदान केंद्र पर कौन से दस्तावेज़ चाहिए?',
       'NOTA क्या है?',
       'EVM कैसे काम करता है?',
-      'आदर्श आचार संहिता क्या है?'
-    ]
+      'आदर्श आचार संहिता क्या है?',
+    ],
   };
   res.json({ success: true, data: suggestions[language] || suggestions.en });
 });

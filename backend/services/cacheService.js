@@ -24,7 +24,7 @@ const cache = new LRUCache({
   ttl: 2 * HOUR,
   // Automatically purge stale entries on access
   allowStale: false,
-  updateAgeOnGet: false
+  updateAgeOnGet: false,
 });
 
 /**
@@ -32,7 +32,7 @@ const cache = new LRUCache({
  * so "Delhi" and "delhi" hit the same cache slot.
  */
 function buildKey(namespace, ...parts) {
-  return [namespace, ...parts.map(p => String(p).toLowerCase().trim())].join(':');
+  return [namespace, ...parts.map((p) => String(p).toLowerCase().trim())].join(':');
 }
 
 function get(key) {
@@ -52,7 +52,7 @@ function stats() {
   return {
     size: cache.size,
     maxSize: cache.max,
-    calculatedSize: cache.calculatedSize
+    calculatedSize: cache.calculatedSize,
   };
 }
 

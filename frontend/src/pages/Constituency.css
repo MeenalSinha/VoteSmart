@@ -266,9 +266,18 @@
   align-self: flex-start;
 }
 
-.constituency-trend.badge-green { background: var(--color-success-light); color: var(--color-success); }
-.constituency-trend.badge-red { background: var(--color-error-light); color: var(--color-error); }
-.constituency-trend.badge-amber { background: var(--color-warning-light); color: var(--color-warning); }
+.constituency-trend.badge-green {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+.constituency-trend.badge-red {
+  background: var(--color-error-light);
+  color: var(--color-error);
+}
+.constituency-trend.badge-amber {
+  background: var(--color-warning-light);
+  color: var(--color-warning);
+}
 
 /* Chart */
 .constituency-chart {
@@ -332,7 +341,9 @@
   transition: background 0.12s ease;
 }
 
-.constituency-winners-row:hover { background: var(--color-bg); }
+.constituency-winners-row:hover {
+  background: var(--color-bg);
+}
 
 .constituency-winners-row.latest {
   background: var(--color-accent-light);
@@ -444,13 +455,19 @@
   letter-spacing: -0.02em;
 }
 
-.demo-stat-lbl { margin-top: 2px; }
+.demo-stat-lbl {
+  margin-top: 2px;
+}
 
 @media (max-width: 600px) {
   .constituency-winners-header,
   .constituency-winners-row {
     grid-template-columns: 70px 1fr 80px;
   }
-  .winners-turnout { display: none; }
-  .demo-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .winners-turnout {
+    display: none;
+  }
+  .demo-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

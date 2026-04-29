@@ -12,11 +12,15 @@ import Home from './Home';
 // Suppress framer-motion in tests
 jest.mock('framer-motion', () => {
   const React = require('react');
-  const m = new Proxy({}, {
-    get: (_, tag) => React.forwardRef(({ children, ...props }, ref) =>
-      React.createElement('div', { ...props, ref }, children)
-    )
-  });
+  const m = new Proxy(
+    {},
+    {
+      get: (_, tag) =>
+        React.forwardRef(({ children, ...props }, ref) =>
+          React.createElement('div', { ...props, ref }, children)
+        ),
+    }
+  );
   return { motion: m, AnimatePresence: ({ children }) => children };
 });
 
@@ -38,9 +42,7 @@ describe('Home page', () => {
 
   it('renders the hero subtitle text', () => {
     renderHome();
-    expect(
-      screen.getByText(/VoteSmart combines AI/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/VoteSmart combines AI/i)).toBeInTheDocument();
   });
 
   it('renders "Start Your Journey" primary CTA button', () => {

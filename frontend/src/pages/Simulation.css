@@ -245,9 +245,18 @@
   border: 3px solid currentColor;
 }
 
-.sim-gameover__score.badge-green { color: var(--color-success); background: var(--color-success-light); }
-.sim-gameover__score.badge-amber { color: var(--color-warning); background: var(--color-warning-light); }
-.sim-gameover__score.badge-red { color: var(--color-error); background: var(--color-error-light); }
+.sim-gameover__score.badge-green {
+  color: var(--color-success);
+  background: var(--color-success-light);
+}
+.sim-gameover__score.badge-amber {
+  color: var(--color-warning);
+  background: var(--color-warning-light);
+}
+.sim-gameover__score.badge-red {
+  color: var(--color-error);
+  background: var(--color-error-light);
+}
 
 .sim-gameover__pct {
   font-family: var(--font-display);
@@ -293,9 +302,15 @@
   border-radius: var(--radius-sm);
 }
 
-.sim-history-item.correct { background: var(--color-success-light); }
-.sim-history-item.wrong { background: var(--color-error-light); }
-.sim-history-item.partial { background: var(--color-warning-light); }
+.sim-history-item.correct {
+  background: var(--color-success-light);
+}
+.sim-history-item.wrong {
+  background: var(--color-error-light);
+}
+.sim-history-item.partial {
+  background: var(--color-warning-light);
+}
 
 /* Sidebar */
 .sim-sidebar {
@@ -337,13 +352,23 @@
   flex-shrink: 0;
 }
 
-.sim-sidebar__dot.green { background: var(--color-success); }
-.sim-sidebar__dot.red { background: var(--color-error); }
-.sim-sidebar__dot.amber { background: var(--color-warning); }
+.sim-sidebar__dot.green {
+  background: var(--color-success);
+}
+.sim-sidebar__dot.red {
+  background: var(--color-error);
+}
+.sim-sidebar__dot.amber {
+  background: var(--color-warning);
+}
 
 @media (max-width: 768px) {
-  .sim-layout { grid-template-columns: 1fr; }
-  .sim-sidebar { display: none; }
+  .sim-layout {
+    grid-template-columns: 1fr;
+  }
+  .sim-sidebar {
+    display: none;
+  }
 }
 
 /* Chat-bubble narrative style */

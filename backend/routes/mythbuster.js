@@ -28,8 +28,8 @@ router.get('/examples', (req, res) => {
       'EVMs can be hacked remotely using Bluetooth',
       'You cannot vote if you do not have a Voter ID card',
       'Voting is compulsory in India',
-      'The Election Commission is controlled by the government in power'
-    ]
+      'The Election Commission is controlled by the government in power',
+    ],
   });
 });
 

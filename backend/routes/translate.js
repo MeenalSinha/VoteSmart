@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
 
     const [translated, detected] = await Promise.all([
       translateText(text.trim(), targetLanguage, req.requestId),
-      detectLanguage(text.trim(), req.requestId)
+      detectLanguage(text.trim(), req.requestId),
     ]);
 
     res.json({
@@ -38,8 +38,8 @@ router.post('/', async (req, res, next) => {
         translatedText: translated,
         detectedSourceLanguage: detected.language,
         targetLanguage,
-        confidence: detected.confidence
-      }
+        confidence: detected.confidence,
+      },
     });
   } catch (error) {
     next(error);

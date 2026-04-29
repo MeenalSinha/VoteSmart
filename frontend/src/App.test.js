@@ -10,11 +10,15 @@ import App from './App';
 // Mock framer-motion to avoid animation side-effects in tests
 jest.mock('framer-motion', () => {
   const React = require('react');
-  const m = new Proxy({}, {
-    get: (_, tag) => React.forwardRef(({ children, ...props }, ref) =>
-      React.createElement(tag === 'div' ? 'div' : tag, { ...props, ref }, children)
-    )
-  });
+  const m = new Proxy(
+    {},
+    {
+      get: (_, tag) =>
+        React.forwardRef(({ children, ...props }, ref) =>
+          React.createElement(tag === 'div' ? 'div' : tag, { ...props, ref }, children)
+        ),
+    }
+  );
   return { motion: m, AnimatePresence: ({ children }) => children };
 });
 

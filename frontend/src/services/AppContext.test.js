@@ -10,21 +10,17 @@ import { AppProvider, useApp } from '../services/AppContext';
 // ── Helper component to expose context values ──────────────────────────────
 function ContextConsumer({ onMount }) {
   const ctx = useApp();
-  React.useEffect(() => { onMount(ctx); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  React.useEffect(() => {
+    onMount(ctx);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div>
       <span data-testid="language">{ctx.userContext.language}</span>
       <span data-testid="city">{ctx.userContext.city}</span>
-      <button
-        data-testid="set-city"
-        onClick={() => ctx.updateUserContext({ city: 'Mumbai' })}
-      >
+      <button data-testid="set-city" onClick={() => ctx.updateUserContext({ city: 'Mumbai' })}>
         Set City
       </button>
-      <button
-        data-testid="clear"
-        onClick={() => ctx.clearSession()}
-      >
+      <button data-testid="clear" onClick={() => ctx.clearSession()}>
         Clear
       </button>
       <span data-testid="t-home-badge">{ctx.t('home.hero.badge')}</span>
@@ -86,7 +82,11 @@ describe('AppContext', () => {
       const { t } = useApp();
       return <span data-testid="unknown">{t('some.unknown.key')}</span>;
     }
-    render(<AppProvider><UnknownKeyConsumer /></AppProvider>);
+    render(
+      <AppProvider>
+        <UnknownKeyConsumer />
+      </AppProvider>
+    );
     expect(screen.getByTestId('unknown').textContent).toBe('some.unknown.key');
   });
 

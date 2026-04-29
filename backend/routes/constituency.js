@@ -9,8 +9,8 @@ router.get('/locations', (req, res) => {
     data: {
       countries: data.countries,
       states: data.states,
-      cities: data.cities
-    }
+      cities: data.cities,
+    },
   });
 });
 
@@ -18,24 +18,24 @@ router.get('/search', (req, res) => {
   const { city, state } = req.query;
   let results = data.constituencies;
 
-  if (state) results = results.filter(c => c.state.toLowerCase() === state.toLowerCase());
-  if (city)  results = results.filter(c => c.name.toLowerCase().includes(city.toLowerCase()));
+  if (state) results = results.filter((c) => c.state.toLowerCase() === state.toLowerCase());
+  if (city) results = results.filter((c) => c.name.toLowerCase().includes(city.toLowerCase()));
 
-  const simplified = results.map(c => ({
-    id:          c.id,
-    name:        c.name,
-    state:       c.state,
-    currentMP:   c.currentMP,
-    party:       c.party,
+  const simplified = results.map((c) => ({
+    id: c.id,
+    name: c.name,
+    state: c.state,
+    currentMP: c.currentMP,
+    party: c.party,
     totalVoters: c.totalVoters,
-    lastTurnout: c.elections[0]?.turnout
+    lastTurnout: c.elections[0]?.turnout,
   }));
 
   res.json({ success: true, data: simplified });
 });
 
 router.get('/:id', (req, res) => {
-  const constituency = data.constituencies.find(c => c.id === req.params.id);
+  const constituency = data.constituencies.find((c) => c.id === req.params.id);
   if (!constituency) {
     return res.status(404).json({ error: 'Constituency not found' });
   }
@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id/insights', async (req, res, next) => {
   try {
-    const constituency = data.constituencies.find(c => c.id === req.params.id);
+    const constituency = data.constituencies.find((c) => c.id === req.params.id);
     if (!constituency) {
       return res.status(404).json({ error: 'Constituency not found' });
     }
@@ -52,10 +52,10 @@ router.post('/:id/insights', async (req, res, next) => {
     const { language = 'en' } = req.body;
     const insights = await explainConstituencyData(
       {
-        name:         constituency.name,
-        elections:    constituency.elections,
-        totalVoters:  constituency.totalVoters,
-        demographics: constituency.demographics
+        name: constituency.name,
+        elections: constituency.elections,
+        totalVoters: constituency.totalVoters,
+        demographics: constituency.demographics,
       },
       language,
       req.requestId

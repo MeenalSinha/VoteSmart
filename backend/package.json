@@ -16,9 +16,11 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
     "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
     "lru-cache": "^11.3.5",
     "morgan": "^1.10.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.0",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

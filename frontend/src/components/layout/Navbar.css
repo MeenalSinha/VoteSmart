@@ -133,8 +133,12 @@
 }
 
 @media (max-width: 768px) {
-  .navbar__hamburger { display: flex; }
-  .navbar__cta { display: none; }
+  .navbar__hamburger {
+    display: flex;
+  }
+  .navbar__cta {
+    display: none;
+  }
 
   .navbar__links {
     display: none;

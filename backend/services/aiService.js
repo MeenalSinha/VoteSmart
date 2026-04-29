@@ -31,23 +31,30 @@ async function callWithRetry(params, requestId, attempt = 1) {
     return await ai.models.generateContent(params);
   } catch (err) {
     const isRetryable =
-      !err.status ||                    // network-level error
-      err.status === 429 ||             // rate limited
-      err.status === 529 ||             // overloaded
-      err.status >= 500;                // server-side error
+      !err.status || // network-level error
+      err.status === 429 || // rate limited
+      err.status === 529 || // overloaded
+      err.status >= 500; // server-side error
 
     if (isRetryable && attempt < MAX_RETRIES) {
       const delayMs = RETRY_BASE_MS * Math.pow(2, attempt - 1);
       logger.warn('Gemini API transient error, retrying', {
-        requestId, attempt, delayMs, status: err.status, message: err.message
+        requestId,
+        attempt,
+        delayMs,
+        status: err.status,
+        message: err.message,
       });
-      await new Promise(r => setTimeout(r, delayMs));
+      await new Promise((r) => setTimeout(r, delayMs));
       return callWithRetry(params, requestId, attempt + 1);
     }
 
     // Not retryable or exhausted retries — rethrow with context
     logger.error('Gemini API call failed', {
-      requestId, attempt, status: err.status, message: err.message
+      requestId,
+      attempt,
+      status: err.status,
+      message: err.message,
     });
     throw err;
   }
@@ -84,9 +91,9 @@ function extractJSON(text) {
 function sanitize(str, maxLen = 200) {
   if (typeof str !== 'string') return '';
   return str
-    .replace(/\r\n/g, ' ')           // CRLF pair -> single space (prevents double-space bug)
-    .replace(/[\r\n\t]/g, ' ')      // remaining lone CR, LF, TAB -> space
-    .replace(/  +/g, ' ')              // collapse consecutive spaces into one
+    .replace(/\r\n/g, ' ') // CRLF pair -> single space (prevents double-space bug)
+    .replace(/[\r\n\t]/g, ' ') // remaining lone CR, LF, TAB -> space
+    .replace(/  +/g, ' ') // collapse consecutive spaces into one
     .replace(/[^\x20-\x7E\u0900-\u097F\u0980-\u09FF]/g, '')
     .substring(0, maxLen)
     .trim();
@@ -113,9 +120,8 @@ async function generateJourney(location, voterType, language = 'en', requestId =
 
   logger.info('Generating journey via AI', { requestId, safeLocation, safeVoterType, lang });
 
-  const langInstruction = lang === 'hi'
-    ? 'Respond entirely in Hindi (Devanagari script).'
-    : 'Respond in English.';
+  const langInstruction =
+    lang === 'hi' ? 'Respond entirely in Hindi (Devanagari script).' : 'Respond in English.';
 
   const prompt = `${langInstruction}
 You are an Indian election information assistant. Generate a detailed, personalized step-by-step voting guide for a ${safeVoterType} voter in ${safeLocation}.
@@ -135,14 +141,17 @@ Return ONLY valid JSON — no prose, no markdown — in this exact structure:
 }
 Generate exactly 4 steps: 1) Voter Registration, 2) Pre-Election Preparation, 3) Documents Required, 4) Polling Day Instructions.`;
 
-  const response = await callWithRetry({
-    model: MODEL,
-    contents: prompt,
-    config: {
-      maxOutputTokens: 1500,
-      responseMimeType: 'application/json'
-    }
-  }, requestId);
+  const response = await callWithRetry(
+    {
+      model: MODEL,
+      contents: prompt,
+      config: {
+        maxOutputTokens: 1500,
+        responseMimeType: 'application/json',
+      },
+    },
+    requestId
+  );
 
   const result = extractJSON(response.text);
 
@@ -171,9 +180,8 @@ async function explainConstituencyData(data, language = 'en', requestId = 'unkno
 
   logger.info('Generating constituency insights via AI', { requestId, name: data.name, lang });
 
-  const langInstruction = lang === 'hi'
-    ? 'Respond entirely in Hindi (Devanagari script).'
-    : 'Respond in English.';
+  const langInstruction =
+    lang === 'hi' ? 'Respond entirely in Hindi (Devanagari script).' : 'Respond in English.';
 
   const prompt = `${langInstruction}
 You are an Indian election data analyst. Explain this constituency election data in 3 simple, insightful points for an average voter. Focus on trends, winning margins, and turnout changes.
@@ -186,14 +194,17 @@ Return ONLY valid JSON — no prose, no markdown:
 }
 The trend field must be exactly one of: "Rising", "Falling", "Stable".`;
 
-  const response = await callWithRetry({
-    model: MODEL,
-    contents: prompt,
-    config: {
-      maxOutputTokens: 500,
-      responseMimeType: 'application/json'
-    }
-  }, requestId);
+  const response = await callWithRetry(
+    {
+      model: MODEL,
+      contents: prompt,
+      config: {
+        maxOutputTokens: 500,
+        responseMimeType: 'application/json',
+      },
+    },
+    requestId
+  );
 
   const result = extractJSON(response.text);
 
@@ -219,12 +230,11 @@ async function chatWithCoach(messages, userContext, language = 'en', requestId =
 
   const safeContext = {
     location: sanitize(userContext.location || '', 100),
-    voterType: sanitize(userContext.voterType || '', 50)
+    voterType: sanitize(userContext.voterType || '', 50),
   };
 
-  const langInstruction = lang === 'hi'
-    ? 'Always respond in Hindi (Devanagari script).'
-    : 'Always respond in English.';
+  const langInstruction =
+    lang === 'hi' ? 'Always respond in Hindi (Devanagari script).' : 'Always respond in English.';
 
   const systemPrompt = `You are an AI Election Coach — a friendly, knowledgeable guide helping Indian voters understand the democratic process. ${langInstruction}
 Voter context: location=${safeContext.location || 'India'}, voterType=${safeContext.voterType || 'general'}.
@@ -238,11 +248,11 @@ Rules:
 
   // Validate and sanitize messages
   const validatedMessages = messages
-    .filter(m => ['user', 'assistant'].includes(m.role))
-    .filter(m => typeof m.content === 'string' && m.content.trim().length > 0)
-    .map(m => ({ 
-      role: m.role === 'assistant' ? 'model' : 'user', 
-      parts: [{ text: m.content.substring(0, 1000).trim() }] 
+    .filter((m) => ['user', 'assistant'].includes(m.role))
+    .filter((m) => typeof m.content === 'string' && m.content.trim().length > 0)
+    .map((m) => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content.substring(0, 1000).trim() }],
     }));
 
   // Enforce strict alternation (good practice for API compatibility)
@@ -265,14 +275,17 @@ Rules:
 
   logger.info('Chat request', { requestId, turns: alternated.length, lang });
 
-  const response = await callWithRetry({
-    model: MODEL,
-    contents: alternated,
-    config: {
-      maxOutputTokens: 500,
-      systemInstruction: systemPrompt
-    }
-  }, requestId);
+  const response = await callWithRetry(
+    {
+      model: MODEL,
+      contents: alternated,
+      config: {
+        maxOutputTokens: 500,
+        systemInstruction: systemPrompt,
+      },
+    },
+    requestId
+  );
 
   return response.text;
 }
@@ -293,9 +306,8 @@ async function bustMyth(claim, language = 'en', requestId = 'unknown') {
 
   logger.info('MythBuster AI call', { requestId, claimLength: safeClaim.length, lang });
 
-  const langInstruction = lang === 'hi'
-    ? 'Respond entirely in Hindi (Devanagari script).'
-    : 'Respond in English.';
+  const langInstruction =
+    lang === 'hi' ? 'Respond entirely in Hindi (Devanagari script).' : 'Respond in English.';
 
   const prompt = `${langInstruction}
 You are an Indian election fact-checker. Analyze the following claim about Indian elections or voting for accuracy.
@@ -311,14 +323,17 @@ Return ONLY valid JSON — no prose, no markdown:
 The verdict field must be exactly one of: "True", "False", "Misleading", "Partially True".
 The confidence field must be an integer between 0 and 100.`;
 
-  const response = await callWithRetry({
-    model: MODEL,
-    contents: prompt,
-    config: {
-      maxOutputTokens: 700,
-      responseMimeType: 'application/json'
-    }
-  }, requestId);
+  const response = await callWithRetry(
+    {
+      model: MODEL,
+      contents: prompt,
+      config: {
+        maxOutputTokens: 700,
+        responseMimeType: 'application/json',
+      },
+    },
+    requestId
+  );
 
   const result = extractJSON(response.text);
 

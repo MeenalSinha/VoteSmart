@@ -32,13 +32,15 @@ export function AppProvider({ children }) {
   // Lazy initializer — loadSession() runs only once (not on every re-render)
   const [userContext, setUserContext] = useState(() => {
     const session = loadSession();
-    return session?.userContext || {
-      country: '',
-      state: '',
-      city: '',
-      voterType: '',
-      language: 'en'
-    };
+    return (
+      session?.userContext || {
+        country: '',
+        state: '',
+        city: '',
+        voterType: '',
+        language: 'en',
+      }
+    );
   });
   const [journeyData, setJourneyDataState] = useState(() => {
     const session = loadSession();
@@ -52,7 +54,7 @@ export function AppProvider({ children }) {
   }, [userContext, journeyData]);
 
   const updateUserContext = (updates) => {
-    setUserContext(prev => ({ ...prev, ...updates }));
+    setUserContext((prev) => ({ ...prev, ...updates }));
   };
 
   const setJourneyData = (data) => {
@@ -73,16 +75,18 @@ export function AppProvider({ children }) {
   };
 
   return (
-    <AppContext.Provider value={{
-      userContext,
-      updateUserContext,
-      journeyData,
-      setJourneyData,
-      simulationScore,
-      setSimulationScore,
-      clearSession,
-      t
-    }}>
+    <AppContext.Provider
+      value={{
+        userContext,
+        updateUserContext,
+        journeyData,
+        setJourneyData,
+        simulationScore,
+        setSimulationScore,
+        clearSession,
+        t,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
@@ -109,9 +113,9 @@ const UI_STRINGS = {
     'journey.title': 'Voter Journey',
     'journey.subtitle': 'Your personalized guide to voting',
     'journey.location.heading': 'Where do you vote?',
-    'journey.location.sub': 'We\'ll personalize your journey based on your location.',
+    'journey.location.sub': "We'll personalize your journey based on your location.",
     'journey.votertype.heading': 'Tell us about yourself',
-    'journey.votertype.sub': 'We\'ll customize your guide based on your voter profile.',
+    'journey.votertype.sub': "We'll customize your guide based on your voter profile.",
     'journey.generating': 'Building your journey',
     'journey.generating.sub': 'AI is generating your personalized guide...',
     'journey.cta.next': 'What should I do next?',
@@ -195,5 +199,5 @@ const UI_STRINGS = {
     'home.hero.title.2': 'आपका बुद्धिमान मार्गदर्शक',
     'home.cta.primary': 'यात्रा शुरू करें',
     'home.cta.secondary': 'सिमुलेशन आज़माएं',
-  }
+  },
 };

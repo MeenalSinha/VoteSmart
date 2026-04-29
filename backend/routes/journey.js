@@ -30,14 +30,22 @@ router.get('/voter-types', (req, res) => {
     success: true,
     data: {
       types: [
-        { id: 'first-time', label: 'First-Time Voter', description: 'Voting for the very first time' },
-        { id: 'student',    label: 'Student Voter',     description: 'Currently enrolled in school or college' },
-        { id: 'senior',     label: 'Senior Voter',      description: 'Above 60 years of age' },
-        { id: 'migrant',    label: 'Migrant Worker',    description: 'Living away from hometown' },
-        { id: 'pwd',        label: 'Person with Disability', description: 'Requires special assistance' },
-        { id: 'regular',    label: 'Regular Voter',     description: 'Voted in previous elections' }
-      ]
-    }
+        {
+          id: 'first-time',
+          label: 'First-Time Voter',
+          description: 'Voting for the very first time',
+        },
+        {
+          id: 'student',
+          label: 'Student Voter',
+          description: 'Currently enrolled in school or college',
+        },
+        { id: 'senior', label: 'Senior Voter', description: 'Above 60 years of age' },
+        { id: 'migrant', label: 'Migrant Worker', description: 'Living away from hometown' },
+        { id: 'pwd', label: 'Person with Disability', description: 'Requires special assistance' },
+        { id: 'regular', label: 'Regular Voter', description: 'Voted in previous elections' },
+      ],
+    },
   });
 });
 

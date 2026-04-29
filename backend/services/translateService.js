@@ -15,12 +15,12 @@ const logger = require('./loggerService');
 // Instantiate the Google Cloud Translation client.
 // On Cloud Run, credentials are picked up automatically from the service account.
 const translate = new Translate({
-  projectId: process.env.GOOGLE_CLOUD_PROJECT || 'votesmart-ai-voting-companion'
+  projectId: process.env.GOOGLE_CLOUD_PROJECT || 'votesmart-ai-voting-companion',
 });
 
 const SUPPORTED_LANGUAGES = {
   en: 'English',
-  hi: 'Hindi'
+  hi: 'Hindi',
 };
 
 /**
@@ -42,7 +42,7 @@ async function translateText(text, targetLang = 'en', requestId = 'unknown') {
     logger.info('Google Cloud Translation request', {
       requestId,
       targetLang,
-      textLength: text.length
+      textLength: text.length,
     });
 
     const [translation] = await translate.translate(text, targetLang);
@@ -51,7 +51,7 @@ async function translateText(text, targetLang = 'en', requestId = 'unknown') {
       requestId,
       targetLang,
       originalLength: text.length,
-      translatedLength: translation.length
+      translatedLength: translation.length,
     });
 
     return translation;
@@ -60,7 +60,7 @@ async function translateText(text, targetLang = 'en', requestId = 'unknown') {
     logger.warn('Google Cloud Translation failed, returning original', {
       requestId,
       targetLang,
-      message: err.message
+      message: err.message,
     });
     return text;
   }
@@ -73,7 +73,11 @@ async function translateText(text, targetLang = 'en', requestId = 'unknown') {
 async function detectLanguage(text, requestId = 'unknown') {
   try {
     const [detection] = await translate.detect(text);
-    logger.info('Language detected', { requestId, language: detection.language, confidence: detection.confidence });
+    logger.info('Language detected', {
+      requestId,
+      language: detection.language,
+      confidence: detection.confidence,
+    });
     return detection;
   } catch (err) {
     logger.warn('Language detection failed', { requestId, message: err.message });

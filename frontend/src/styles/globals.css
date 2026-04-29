@@ -37,7 +37,7 @@
   --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05), 0 2px 4px rgba(15, 23, 42, 0.03);
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.1), 0 8px 16px rgba(15, 23, 42, 0.05);
   --shadow-xl: 0 32px 64px rgba(15, 23, 42, 0.12), 0 16px 24px rgba(15, 23, 42, 0.06);
 
   /* Typography */
@@ -52,7 +52,9 @@
   --radius-full: 9999px;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -72,7 +74,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.2;
@@ -91,23 +98,37 @@ button {
   outline: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: var(--font-body);
   outline: none;
   border-radius: var(--radius-md);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--color-accent) !important;
   box-shadow: 0 0 0 3px var(--color-accent-light) !important;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--color-border-subtle); }
-::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-ink-muted); }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-border-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-muted);
+}
 
 /* ── Accessibility ────────────────────────────────────────────────────────── */
 
@@ -138,7 +159,9 @@ input:focus, textarea:focus, select:focus {
 
 /* Respect user motion preferences — disable all animations */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -159,7 +182,9 @@ input:focus, textarea:focus, select:focus {
   border-radius: var(--radius-md);
   padding: 32px;
   box-shadow: var(--shadow-md);
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass {
@@ -228,14 +253,32 @@ input:focus, textarea:focus, select:focus {
   letter-spacing: 0.02em;
 }
 
-.badge-blue { background: var(--color-tag-blue); color: var(--color-tag-blue-text); }
-.badge-green { background: var(--color-tag-green); color: var(--color-tag-green-text); }
-.badge-amber { background: var(--color-tag-amber); color: var(--color-tag-amber-text); }
-.badge-red { background: var(--color-tag-red); color: var(--color-tag-red-text); }
+.badge-blue {
+  background: var(--color-tag-blue);
+  color: var(--color-tag-blue-text);
+}
+.badge-green {
+  background: var(--color-tag-green);
+  color: var(--color-tag-green-text);
+}
+.badge-amber {
+  background: var(--color-tag-amber);
+  color: var(--color-tag-amber-text);
+}
+.badge-red {
+  background: var(--color-tag-red);
+  color: var(--color-tag-red-text);
+}
 
-.text-muted { color: var(--color-ink-secondary); }
-.text-small { font-size: 13px; }
-.text-xs { font-size: 12px; }
+.text-muted {
+  color: var(--color-ink-secondary);
+}
+.text-small {
+  font-size: 13px;
+}
+.text-xs {
+  font-size: 12px;
+}
 
 .divider {
   height: 1px;
@@ -245,23 +288,44 @@ input:focus, textarea:focus, select:focus {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(-12px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .animate-in {
@@ -269,7 +333,12 @@ input:focus, textarea:focus, select:focus {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, var(--color-border-subtle) 25%, var(--color-border) 50%, var(--color-border-subtle) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--color-border-subtle) 25%,
+    var(--color-border) 50%,
+    var(--color-border-subtle) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius-sm);
@@ -287,13 +356,20 @@ input:focus, textarea:focus, select:focus {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Page transition */
-.page-enter { opacity: 0; transform: translateY(12px); }
+.page-enter {
+  opacity: 0;
+  transform: translateY(12px);
+}
 .page-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
