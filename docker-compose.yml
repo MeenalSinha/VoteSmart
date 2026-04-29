@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5000
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
       # In production, set FRONTEND_URL to your actual domain
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost}
     ports:

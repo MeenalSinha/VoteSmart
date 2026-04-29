@@ -1,6 +1,6 @@
 /**
  * aiService.js
- * All Anthropic Claude AI integrations.
+ * All Google Gemini AI integrations.
  *
  * Production features:
  *  - LRU cache with per-function TTLs (avoids repeat API calls)
@@ -11,34 +11,34 @@
  *  - Structured logging with request context
  */
 
-const Anthropic = require('@anthropic-ai/sdk');
+const { GoogleGenAI } = require('@google/genai');
 const { buildKey, get, set, HOUR } = require('./cacheService');
 const logger = require('./loggerService');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-const MODEL = 'claude-sonnet-4-20250514';
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const MODEL = 'gemini-2.5-pro';
 
 // ── Retry configuration ────────────────────────────────────────────────────
 const MAX_RETRIES = 3;
 const RETRY_BASE_MS = 800; // doubles each attempt: 800, 1600, 3200
 
 /**
- * Call the Anthropic API with exponential backoff retry on transient errors.
+ * Call the Gemini API with exponential backoff retry on transient errors.
  * Retries on: network errors, 429 (rate limit), 529 (overloaded), 500/503.
  */
 async function callWithRetry(params, requestId, attempt = 1) {
   try {
-    return await client.messages.create(params);
+    return await ai.models.generateContent(params);
   } catch (err) {
     const isRetryable =
       !err.status ||                    // network-level error
       err.status === 429 ||             // rate limited
-      err.status === 529 ||             // Anthropic overloaded
+      err.status === 529 ||             // overloaded
       err.status >= 500;                // server-side error
 
     if (isRetryable && attempt < MAX_RETRIES) {
       const delayMs = RETRY_BASE_MS * Math.pow(2, attempt - 1);
-      logger.warn('Anthropic API transient error, retrying', {
+      logger.warn('Gemini API transient error, retrying', {
         requestId, attempt, delayMs, status: err.status, message: err.message
       });
       await new Promise(r => setTimeout(r, delayMs));
@@ -46,7 +46,7 @@ async function callWithRetry(params, requestId, attempt = 1) {
     }
 
     // Not retryable or exhausted retries — rethrow with context
-    logger.error('Anthropic API call failed', {
+    logger.error('Gemini API call failed', {
       requestId, attempt, status: err.status, message: err.message
     });
     throw err;
@@ -117,12 +117,7 @@ async function generateJourney(location, voterType, language = 'en', requestId =
     ? 'Respond entirely in Hindi (Devanagari script).'
     : 'Respond in English.';
 
-  const response = await callWithRetry({
-    model: MODEL,
-    max_tokens: 1500,
-    messages: [{
-      role: 'user',
-      content: `${langInstruction}
+  const prompt = `${langInstruction}
 You are an Indian election information assistant. Generate a detailed, personalized step-by-step voting guide for a ${safeVoterType} voter in ${safeLocation}.
 Return ONLY valid JSON — no prose, no markdown — in this exact structure:
 {
@@ -138,11 +133,18 @@ Return ONLY valid JSON — no prose, no markdown — in this exact structure:
   "summary": "A 2-sentence personalized summary for this voter",
   "urgentNote": "One critical thing this voter must remember"
 }
-Generate exactly 4 steps: 1) Voter Registration, 2) Pre-Election Preparation, 3) Documents Required, 4) Polling Day Instructions.`
-    }]
+Generate exactly 4 steps: 1) Voter Registration, 2) Pre-Election Preparation, 3) Documents Required, 4) Polling Day Instructions.`;
+
+  const response = await callWithRetry({
+    model: MODEL,
+    contents: prompt,
+    config: {
+      maxOutputTokens: 1500,
+      responseMimeType: 'application/json'
+    }
   }, requestId);
 
-  const result = extractJSON(response.content[0].text);
+  const result = extractJSON(response.text);
 
   if (!Array.isArray(result.steps) || result.steps.length === 0) {
     throw new Error('AI returned journey with no steps');
@@ -173,12 +175,7 @@ async function explainConstituencyData(data, language = 'en', requestId = 'unkno
     ? 'Respond entirely in Hindi (Devanagari script).'
     : 'Respond in English.';
 
-  const response = await callWithRetry({
-    model: MODEL,
-    max_tokens: 500,
-    messages: [{
-      role: 'user',
-      content: `${langInstruction}
+  const prompt = `${langInstruction}
 You are an Indian election data analyst. Explain this constituency election data in 3 simple, insightful points for an average voter. Focus on trends, winning margins, and turnout changes.
 Data: ${JSON.stringify(data)}
 Return ONLY valid JSON — no prose, no markdown:
@@ -187,11 +184,18 @@ Return ONLY valid JSON — no prose, no markdown:
   "trend": "Rising",
   "highlight": "The single most interesting fact in one sentence"
 }
-The trend field must be exactly one of: "Rising", "Falling", "Stable".`
-    }]
+The trend field must be exactly one of: "Rising", "Falling", "Stable".`;
+
+  const response = await callWithRetry({
+    model: MODEL,
+    contents: prompt,
+    config: {
+      maxOutputTokens: 500,
+      responseMimeType: 'application/json'
+    }
   }, requestId);
 
-  const result = extractJSON(response.content[0].text);
+  const result = extractJSON(response.text);
 
   if (!Array.isArray(result.insights) || result.insights.length === 0) {
     throw new Error('AI returned insights with invalid shape');
@@ -236,9 +240,12 @@ Rules:
   const validatedMessages = messages
     .filter(m => ['user', 'assistant'].includes(m.role))
     .filter(m => typeof m.content === 'string' && m.content.trim().length > 0)
-    .map(m => ({ role: m.role, content: m.content.substring(0, 1000).trim() }));
+    .map(m => ({ 
+      role: m.role === 'assistant' ? 'model' : 'user', 
+      parts: [{ text: m.content.substring(0, 1000).trim() }] 
+    }));
 
-  // Enforce strict alternation (Anthropic API requirement)
+  // Enforce strict alternation (good practice for API compatibility)
   const alternated = [];
   let lastRole = null;
   for (const msg of validatedMessages) {
@@ -256,12 +263,14 @@ Rules:
 
   const response = await callWithRetry({
     model: MODEL,
-    max_tokens: 500,
-    system: systemPrompt,
-    messages: alternated
+    contents: alternated,
+    config: {
+      maxOutputTokens: 500,
+      systemInstruction: systemPrompt
+    }
   }, requestId);
 
-  return response.content[0].text;
+  return response.text;
 }
 
 // ── bustMyth ──────────────────────────────────────────────────────────────
@@ -284,12 +293,7 @@ async function bustMyth(claim, language = 'en', requestId = 'unknown') {
     ? 'Respond entirely in Hindi (Devanagari script).'
     : 'Respond in English.';
 
-  const response = await callWithRetry({
-    model: MODEL,
-    max_tokens: 700,
-    messages: [{
-      role: 'user',
-      content: `${langInstruction}
+  const prompt = `${langInstruction}
 You are an Indian election fact-checker. Analyze the following claim about Indian elections or voting for accuracy.
 Claim to analyze: <claim>${safeClaim}</claim>
 Return ONLY valid JSON — no prose, no markdown:
@@ -301,11 +305,18 @@ Return ONLY valid JSON — no prose, no markdown:
   "sources": ["Election Commission of India", "Representation of the People Act 1950"]
 }
 The verdict field must be exactly one of: "True", "False", "Misleading", "Partially True".
-The confidence field must be an integer between 0 and 100.`
-    }]
+The confidence field must be an integer between 0 and 100.`;
+
+  const response = await callWithRetry({
+    model: MODEL,
+    contents: prompt,
+    config: {
+      maxOutputTokens: 700,
+      responseMimeType: 'application/json'
+    }
   }, requestId);
 
-  const result = extractJSON(response.content[0].text);
+  const result = extractJSON(response.text);
 
   const validVerdicts = ['True', 'False', 'Misleading', 'Partially True'];
   if (!validVerdicts.includes(result.verdict)) result.verdict = 'Misleading';

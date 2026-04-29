@@ -1,6 +1,6 @@
 # VoteSmart — AI Voting Companion
 
-A full-stack, AI-powered web application that helps voters understand and navigate the Indian election process. Built with React, Node.js/Express, and Claude AI (Anthropic).
+A full-stack, AI-powered web application that helps voters understand and navigate the Indian election process. Built with React, Node.js/Express, and Claude AI (Google).
 
 ---
 
@@ -27,7 +27,7 @@ ai-voting-companion/
 │   │   ├── chat.js               ← POST /api/chat/message
 │   │   └── mythbuster.js         ← POST /api/mythbuster/check
 │   ├── services/
-│   │   ├── aiService.js          ← Anthropic Claude (cache + retry + sanitize)
+│   │   ├── aiService.js          ← Google Gemini (cache + retry + sanitize)
 │   │   ├── cacheService.js       ← LRU cache with TTL
 │   │   └── loggerService.js      ← Structured JSON logging
 │   ├── data/
@@ -65,7 +65,7 @@ ai-voting-companion/
 
 ### Prerequisites
 - Node.js v18+
-- An Anthropic API key → https://console.anthropic.com
+- An Google API key → https://console.Google.com
 
 ### 1. Install all dependencies
 ```bash
@@ -75,7 +75,7 @@ npm run install:all
 ### 2. Configure backend environment
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and set ANTHROPIC_API_KEY
+# Edit backend/.env and set GEMINI_API_KEY
 ```
 
 ### 3. Run both servers
@@ -98,7 +98,7 @@ cd backend && npm test
 ```bash
 # 1. Configure environment
 cp .env.example .env
-# Edit .env — set ANTHROPIC_API_KEY and FRONTEND_URL
+# Edit .env — set GEMINI_API_KEY and FRONTEND_URL
 
 # 2. Build and start
 docker-compose up --build -d
@@ -147,7 +147,7 @@ curl http://localhost/
 ## Production Features
 
 ### Backend
-- **Startup validation** — exits immediately if `ANTHROPIC_API_KEY` is missing
+- **Startup validation** — exits immediately if `GEMINI_API_KEY` is missing
 - **Request IDs** — every request tagged with UUID; propagated to logs and response headers
 - **Structured logging** — JSON in production, color-coded in development
 - **LRU cache** — AI responses cached (journey 2h, insights 4h, mythbuster 4h) — max 500 entries
@@ -182,7 +182,7 @@ curl http://localhost/
 ### Backend (`backend/.env`)
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | — | Anthropic API key |
+| `GEMINI_API_KEY` | Yes | — | Google API key |
 | `PORT` | No | 5000 | HTTP port |
 | `NODE_ENV` | No | development | `development` or `production` |
 | `FRONTEND_URL` | No | http://localhost:3000 | Comma-separated CORS origins |

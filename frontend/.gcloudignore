@@ -1,0 +1,9 @@
+.gcloudignore
+.git
+.gitignore
+node_modules/
+build/
+.env
+.env.*
+!.env.production
+npm-debug.log*

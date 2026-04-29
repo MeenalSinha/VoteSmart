@@ -2,7 +2,7 @@
  * server.js — VoteSmart Backend Entry Point
  *
  * Production features implemented:
- *  - Startup validation (fail-fast if ANTHROPIC_API_KEY missing)
+ *  - Startup validation (fail-fast if GEMINI_API_KEY missing)
  *  - Request ID middleware (every request gets a unique UUID for tracing)
  *  - Structured logging via loggerService
  *  - Multi-origin CORS (comma-separated FRONTEND_URL)
@@ -26,8 +26,8 @@ const logger = require('./services/loggerService');
 const { stats: cacheStats } = require('./services/cacheService');
 
 // ── Startup validation ─────────────────────────────────────────────────────
-if (!process.env.ANTHROPIC_API_KEY) {
-  logger.error('FATAL: ANTHROPIC_API_KEY is not set. Copy backend/.env.example to backend/.env and add your key.');
+if (!process.env.GEMINI_API_KEY) {
+  logger.error('FATAL: GEMINI_API_KEY is not set. Copy backend/.env.example to backend/.env and add your key.');
   process.exit(1);
 }
 

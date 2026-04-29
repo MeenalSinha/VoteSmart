@@ -5,7 +5,7 @@
 
 'use strict';
 
-process.env.ANTHROPIC_API_KEY = 'test-key-for-smoke-tests';
+process.env.GEMINI_API_KEY = 'test-key-for-smoke-tests';
 process.env.NODE_ENV = 'test';
 
 const assert = require('assert');
