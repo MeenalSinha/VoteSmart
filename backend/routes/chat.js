@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { chatWithCoach } = require('../services/aiService');
+const { detectLanguage } = require('../services/translateService');
 
 router.post('/message', async (req, res, next) => {
   try {
@@ -24,8 +25,19 @@ router.post('/message', async (req, res, next) => {
       return res.status(400).json({ error: 'First message must be from the user' });
     }
 
-    const reply = await chatWithCoach(messages, userContext || {}, language, req.requestId);
-    res.json({ success: true, data: { reply, timestamp: new Date().toISOString() } });
+    // Auto-detect language from the user's last message via Google Cloud Translation API
+    // This allows the AI to respond in the language the user is writing in.
+    let resolvedLanguage = language;
+    const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+    if (lastUserMsg && language === 'en') {
+      const detected = await detectLanguage(lastUserMsg.content, req.requestId);
+      if (detected.language === 'hi' && detected.confidence > 0.7) {
+        resolvedLanguage = 'hi';
+      }
+    }
+
+    const reply = await chatWithCoach(messages, userContext || {}, resolvedLanguage, req.requestId);
+    res.json({ success: true, data: { reply, timestamp: new Date().toISOString(), detectedLanguage: resolvedLanguage } });
   } catch (error) {
     next(error);
   }

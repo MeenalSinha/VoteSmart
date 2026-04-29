@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { chatAPI } from '../services/api';
 import { useApp } from '../services/AppContext';
+import { analyticsEvents, saveChatMessage } from '../services/firebase';
 import './Chat.css';
 
 // Stable initial greeting builder — avoids recreating on every render
@@ -78,11 +79,15 @@ export default function Chat() {
         },
         userContext.language
       );
+      const reply = res.data.reply;
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: res.data.reply,
+        content: reply,
         timestamp: res.data.timestamp
       }]);
+      // Track in Firebase Analytics and persist to Firestore
+      analyticsEvents.chatMessage(userContext.language);
+      saveChatMessage(content, reply, userContext.language);
     } catch (e) {
       setMessages(prev => [...prev, {
         role: 'assistant',

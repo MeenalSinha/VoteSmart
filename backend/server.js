@@ -36,6 +36,7 @@ const simulationRoutes = require('./routes/simulation');
 const constituencyRoutes = require('./routes/constituency');
 const chatRoutes = require('./routes/chat');
 const mythbusterRoutes = require('./routes/mythbuster');
+const translateRoutes = require('./routes/translate');
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5000;
@@ -153,6 +154,7 @@ app.use('/api/simulation', simulationRoutes);
 app.use('/api/constituency', constituencyRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/mythbuster', mythbusterRoutes);
+app.use('/api/translate', translateRoutes);
 
 // ── Health + observability ─────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {

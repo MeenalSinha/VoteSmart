@@ -1,8 +1,9 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AppProvider } from './services/AppContext';
 import Navbar from './components/layout/Navbar';
 import ErrorBoundary from './components/shared/ErrorBoundary';
+import { analyticsEvents } from './services/firebase';
 import './styles/globals.css';
 
 // Lazy load pages — reduces initial JS bundle size
@@ -26,10 +27,24 @@ function PageLoader() {
   );
 }
 
+// Tracks route changes and fires Firebase Analytics page_view events
+function RouteTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    const pageNames = {
+      '/': 'Home', '/journey': 'Voter Journey', '/simulation': 'Simulation',
+      '/constituency': 'Constituency', '/chat': 'AI Chat', '/mythbuster': 'MythBuster'
+    };
+    analyticsEvents.pageView(pageNames[location.pathname] || location.pathname);
+  }, [location.pathname]);
+  return null;
+}
+
 function App() {
   return (
     <AppProvider>
       <Router>
+        <RouteTracker />
         <Navbar />
         <main>
           {/* Each page wrapped in its own ErrorBoundary so one page crash

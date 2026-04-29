@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { mythbusterAPI } from '../services/api';
 import { useApp } from '../services/AppContext';
+import { analyticsEvents } from '../services/firebase';
 import './MythBuster.css';
 
 // Verdict config outside component — stable reference, no recreation on render
@@ -69,6 +70,7 @@ export default function MythBuster() {
       const res = await mythbusterAPI.checkClaim(claim.trim(), userContext.language);
       setResult(res.data);
       setHistory(prev => [{ claim: claim.trim(), result: res.data }, ...prev.slice(0, 4)]);
+      analyticsEvents.mythChecked(claim.trim().length);
     } catch (e) {
       setError(e.message || 'Could not analyze the claim. Please try again.');
     } finally {

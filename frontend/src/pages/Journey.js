@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../services/AppContext';
 import { journeyAPI, constituencyAPI } from '../services/api';
+import { analyticsEvents } from '../services/firebase';
 import jsPDF from 'jspdf';
 import './Journey.css';
 
@@ -52,8 +53,10 @@ export default function Journey() {
     try {
       const location = `${city}, ${state}, ${country}`;
       updateUserContext({ country, state, city, voterType: selectedVoterType });
+      analyticsEvents.journeyStarted(selectedVoterType, location);
       const res = await journeyAPI.generate(location, selectedVoterType, userContext.language);
       setJourneyData(res.data);
+      analyticsEvents.journeyCompleted(selectedVoterType);
       setStep(3);
     } catch (e) {
       setError(e.message);
@@ -105,6 +108,7 @@ export default function Journey() {
       doc.text('Important: ' + journeyData.urgentNote, 20, y);
     }
     doc.save(`VoteSmart-Checklist-${city.replace(/\s/g, '-')}.pdf`);
+    analyticsEvents.pdfDownloaded();
   }, [journeyData, city, state, selectedVoterType]);
 
   const progressWidth = step === 0 ? 10 : step === 1 ? 40 : step === 2 ? 70 : 100;

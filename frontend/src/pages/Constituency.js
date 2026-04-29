@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 import { constituencyAPI } from '../services/api';
 import { useApp } from '../services/AppContext';
+import GoogleMapConstituency from '../components/shared/GoogleMapConstituency';
+import { analyticsEvents } from '../services/firebase';
 import './Constituency.css';
 
 const PARTY_COLORS = {
@@ -51,6 +53,7 @@ export default function Constituency() {
     try {
       const res = await constituencyAPI.getById(c.id);
       setSelected(res.data);
+      analyticsEvents.constituencyViewed(c.name, c.state);
 
       setInsightsLoading(true);
       constituencyAPI.getInsights(c.id, userContext.language)
@@ -192,11 +195,27 @@ export default function Constituency() {
                   </div>
                 </div>
 
+                {/* Google Maps — constituency location */}
+                <div className="constituency-chart card">
+                  <h4>
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{marginRight:6,verticalAlign:'middle'}}>
+                      <path d="M7 1C4.239 1 2 3.239 2 6c0 4.667 5 9 5 9s5-4.333 5-9c0-2.761-2.239-5-5-5z" stroke="currentColor" strokeWidth="1.3"/>
+                      <circle cx="7" cy="6" r="1.5" stroke="currentColor" strokeWidth="1.3"/>
+                    </svg>
+                    Location — Google Maps
+                  </h4>
+                  <GoogleMapConstituency
+                    constituencyId={selected.id}
+                    constituencyName={selected.name}
+                  />
+                  <p className="text-xs text-muted" style={{marginTop:6}}>Powered by Google Maps Platform</p>
+                </div>
+
                 {/* AI Insights */}
                 <div className="constituency-insights card">
                   <div className="constituency-insights__header">
                     <h4>{t('const.ai')}</h4>
-                    <span className="badge badge-blue">Powered by Claude</span>
+                    <span className="badge badge-blue">Powered by Gemini AI</span>
                   </div>
                   {insightsLoading ? (
                     <div className="constituency-insights__loading">
