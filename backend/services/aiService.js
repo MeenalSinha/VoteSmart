@@ -255,6 +255,10 @@ Rules:
     }
   }
 
+  if (alternated.length > 0 && alternated[0].role === 'model') {
+    alternated.shift();
+  }
+
   if (alternated.length === 0 || alternated[0].role !== 'user') {
     throw new Error('Conversation must start with a user message');
   }

@@ -4,6 +4,7 @@ build
 .env
 .env.*
 !.env.example
+!.env.production
 .git
 .gitignore
 README.md
