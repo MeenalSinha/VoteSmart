@@ -1,0 +1,258 @@
+{
+  "constituencies": [
+    {
+      "id": "new-delhi",
+      "name": "New Delhi",
+      "state": "Delhi",
+      "country": "India",
+      "currentMP": "Arvind Kejriwal",
+      "party": "AAP",
+      "totalVoters": 1456780,
+      "elections": [
+        { "year": 2024, "winner": "AAP", "votes": { "AAP": 145230, "BJP": 132450, "INC": 34120, "Others": 18900 }, "turnout": 72.4 },
+        { "year": 2020, "winner": "AAP", "votes": { "AAP": 152100, "BJP": 121300, "INC": 28900, "Others": 15200 }, "turnout": 68.9 },
+        { "year": 2015, "winner": "AAP", "votes": { "AAP": 162300, "BJP": 98400, "INC": 32100, "Others": 12800 }, "turnout": 65.1 }
+      ],
+      "demographics": { "urban": 94, "rural": 6, "literacy": 88.7, "avgAge": 34 }
+    },
+    {
+      "id": "north-delhi",
+      "name": "North Delhi",
+      "state": "Delhi",
+      "country": "India",
+      "currentMP": "Pravesh Verma",
+      "party": "BJP",
+      "totalVoters": 1389450,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 148700, "AAP": 127300, "INC": 31400, "Others": 14100 }, "turnout": 69.3 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 163400, "AAP": 118200, "INC": 29800, "Others": 12600 }, "turnout": 67.1 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 158200, "AAP": 98300, "INC": 42100, "Others": 15800 }, "turnout": 64.7 }
+      ],
+      "demographics": { "urban": 92, "rural": 8, "literacy": 86.4, "avgAge": 33 }
+    },
+    {
+      "id": "mumbai-south",
+      "name": "Mumbai South",
+      "state": "Maharashtra",
+      "country": "India",
+      "currentMP": "Arvind Sawant",
+      "party": "Shiv Sena (UBT)",
+      "totalVoters": 1034560,
+      "elections": [
+        { "year": 2024, "winner": "Shiv Sena (UBT)", "votes": { "Shiv Sena (UBT)": 98200, "BJP": 87300, "INC": 45100, "Others": 22400 }, "turnout": 55.6 },
+        { "year": 2019, "winner": "Shiv Sena", "votes": { "Shiv Sena": 110200, "INC": 67300, "BJP": 45100, "Others": 18900 }, "turnout": 52.3 },
+        { "year": 2014, "winner": "Shiv Sena", "votes": { "Shiv Sena": 118400, "INC": 73200, "BJP": 38700, "Others": 21300 }, "turnout": 50.8 }
+      ],
+      "demographics": { "urban": 100, "rural": 0, "literacy": 91.2, "avgAge": 37 }
+    },
+    {
+      "id": "pune",
+      "name": "Pune",
+      "state": "Maharashtra",
+      "country": "India",
+      "currentMP": "Murlidhar Mohol",
+      "party": "BJP",
+      "totalVoters": 1567890,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 234100, "INC": 198700, "NCP": 45300, "Others": 28900 }, "turnout": 52.3 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 251300, "INC": 187400, "NCP": 56700, "Others": 31200 }, "turnout": 50.1 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 228700, "INC": 167300, "NCP": 67800, "Others": 34200 }, "turnout": 48.7 }
+      ],
+      "demographics": { "urban": 97, "rural": 3, "literacy": 90.4, "avgAge": 33 }
+    },
+    {
+      "id": "bangalore-south",
+      "name": "Bangalore South",
+      "state": "Karnataka",
+      "country": "India",
+      "currentMP": "Tejasvi Surya",
+      "party": "BJP",
+      "totalVoters": 2198340,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 287600, "INC": 198400, "JD(S)": 45200, "Others": 31800 }, "turnout": 61.8 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 312400, "INC": 187300, "JD(S)": 67100, "Others": 28900 }, "turnout": 59.4 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 294100, "INC": 173400, "JD(S)": 78200, "Others": 34100 }, "turnout": 57.2 }
+      ],
+      "demographics": { "urban": 98, "rural": 2, "literacy": 89.5, "avgAge": 32 }
+    },
+    {
+      "id": "mysore",
+      "name": "Mysore",
+      "state": "Karnataka",
+      "country": "India",
+      "currentMP": "Yaduveer Wadiyar",
+      "party": "BJP",
+      "totalVoters": 1876540,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 312400, "INC": 267800, "JD(S)": 89300, "Others": 34100 }, "turnout": 64.2 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 287100, "INC": 243600, "JD(S)": 112400, "Others": 29800 }, "turnout": 62.7 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 267300, "INC": 229400, "JD(S)": 134200, "Others": 37100 }, "turnout": 61.3 }
+      ],
+      "demographics": { "urban": 58, "rural": 42, "literacy": 82.1, "avgAge": 31 }
+    },
+    {
+      "id": "varanasi",
+      "name": "Varanasi",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "currentMP": "Narendra Modi",
+      "party": "BJP",
+      "totalVoters": 1987650,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 456700, "SP": 298400, "BSP": 87300, "INC": 45200, "Others": 34100 }, "turnout": 58.2 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 523400, "SP-BSP-RLD": 347200, "INC": 152300, "Others": 89100 }, "turnout": 63.1 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 581022, "AAP": 209238, "INC": 75614, "Others": 143210 }, "turnout": 64.8 }
+      ],
+      "demographics": { "urban": 45, "rural": 55, "literacy": 77.3, "avgAge": 29 }
+    },
+    {
+      "id": "lucknow",
+      "name": "Lucknow",
+      "state": "Uttar Pradesh",
+      "country": "India",
+      "currentMP": "Rajnath Singh",
+      "party": "BJP",
+      "totalVoters": 1823400,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 398700, "SP": 287300, "BSP": 67400, "INC": 45100, "Others": 28900 }, "turnout": 56.4 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 434200, "SP-BSP-RLD": 287600, "INC": 87300, "Others": 34100 }, "turnout": 58.7 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 412300, "SP": 234100, "BSP": 98400, "INC": 76200, "Others": 42100 }, "turnout": 57.9 }
+      ],
+      "demographics": { "urban": 68, "rural": 32, "literacy": 82.4, "avgAge": 30 }
+    },
+    {
+      "id": "chennai-central",
+      "name": "Chennai Central",
+      "state": "Tamil Nadu",
+      "country": "India",
+      "currentMP": "Dayanidhi Maran",
+      "party": "DMK",
+      "totalVoters": 1123890,
+      "elections": [
+        { "year": 2024, "winner": "DMK", "votes": { "DMK": 234500, "AIADMK": 187300, "BJP": 45200, "Others": 34100 }, "turnout": 69.3 },
+        { "year": 2019, "winner": "DMK", "votes": { "DMK": 312400, "AIADMK": 198700, "BJP": 34100, "Others": 28900 }, "turnout": 71.2 },
+        { "year": 2014, "winner": "AIADMK", "votes": { "AIADMK": 298700, "DMK": 234100, "BJP": 28900, "Others": 45200 }, "turnout": 68.7 }
+      ],
+      "demographics": { "urban": 100, "rural": 0, "literacy": 93.4, "avgAge": 35 }
+    },
+    {
+      "id": "coimbatore",
+      "name": "Coimbatore",
+      "state": "Tamil Nadu",
+      "country": "India",
+      "currentMP": "K. Annamalai",
+      "party": "BJP",
+      "totalVoters": 1456780,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 245600, "DMK": 198700, "AIADMK": 134200, "Others": 45300 }, "turnout": 67.8 },
+        { "year": 2019, "winner": "DMK", "votes": { "DMK": 278900, "AIADMK": 198700, "BJP": 134100, "Others": 32400 }, "turnout": 70.4 },
+        { "year": 2014, "winner": "AIADMK", "votes": { "AIADMK": 312400, "DMK": 187300, "BJP": 98400, "Others": 34100 }, "turnout": 69.1 }
+      ],
+      "demographics": { "urban": 78, "rural": 22, "literacy": 87.6, "avgAge": 34 }
+    },
+    {
+      "id": "kolkata-north",
+      "name": "Kolkata North",
+      "state": "West Bengal",
+      "country": "India",
+      "currentMP": "Sudip Bandyopadhyay",
+      "party": "TMC",
+      "totalVoters": 1567230,
+      "elections": [
+        { "year": 2024, "winner": "TMC", "votes": { "TMC": 345600, "BJP": 267400, "INC": 45100, "Others": 34200 }, "turnout": 76.2 },
+        { "year": 2019, "winner": "TMC", "votes": { "TMC": 378900, "BJP": 234700, "INC": 56400, "Others": 28700 }, "turnout": 78.4 },
+        { "year": 2014, "winner": "TMC", "votes": { "TMC": 398700, "INC": 187300, "BJP": 89400, "Others": 45200 }, "turnout": 75.9 }
+      ],
+      "demographics": { "urban": 95, "rural": 5, "literacy": 87.1, "avgAge": 36 }
+    },
+    {
+      "id": "jadavpur",
+      "name": "Jadavpur",
+      "state": "West Bengal",
+      "country": "India",
+      "currentMP": "Saayoni Ghosh",
+      "party": "TMC",
+      "totalVoters": 1678450,
+      "elections": [
+        { "year": 2024, "winner": "TMC", "votes": { "TMC": 356700, "BJP": 234500, "INC": 45200, "CPIM": 34100, "Others": 18900 }, "turnout": 79.1 },
+        { "year": 2019, "winner": "TMC", "votes": { "TMC": 387400, "BJP": 198700, "INC": 56300, "CPIM": 45200, "Others": 23100 }, "turnout": 81.3 },
+        { "year": 2014, "winner": "TMC", "votes": { "TMC": 412300, "CPIM": 234100, "BJP": 78400, "INC": 56200, "Others": 29800 }, "turnout": 80.7 }
+      ],
+      "demographics": { "urban": 87, "rural": 13, "literacy": 90.2, "avgAge": 34 }
+    },
+    {
+      "id": "jaipur",
+      "name": "Jaipur",
+      "state": "Rajasthan",
+      "country": "India",
+      "currentMP": "Manju Sharma",
+      "party": "BJP",
+      "totalVoters": 2134560,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 456700, "INC": 312400, "BSP": 45200, "Others": 34100 }, "turnout": 63.7 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 498700, "INC": 287300, "BSP": 56400, "Others": 28900 }, "turnout": 65.2 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 512400, "INC": 234100, "BSP": 67800, "Others": 42300 }, "turnout": 64.8 }
+      ],
+      "demographics": { "urban": 72, "rural": 28, "literacy": 79.4, "avgAge": 30 }
+    },
+    {
+      "id": "jodhpur",
+      "name": "Jodhpur",
+      "state": "Rajasthan",
+      "country": "India",
+      "currentMP": "Gajendra Singh Shekhawat",
+      "party": "BJP",
+      "totalVoters": 1987650,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 423400, "INC": 298700, "BSP": 45300, "Others": 29800 }, "turnout": 61.4 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 451200, "INC": 267800, "BSP": 56700, "Others": 31200 }, "turnout": 62.9 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 467800, "INC": 234500, "BSP": 67100, "Others": 38700 }, "turnout": 63.7 }
+      ],
+      "demographics": { "urban": 60, "rural": 40, "literacy": 76.8, "avgAge": 29 }
+    },
+    {
+      "id": "ahmedabad-east",
+      "name": "Ahmedabad East",
+      "state": "Gujarat",
+      "country": "India",
+      "currentMP": "Hasit Vasavada",
+      "party": "BJP",
+      "totalVoters": 1876540,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 489700, "INC": 198400, "AAP": 67300, "Others": 34100 }, "turnout": 58.3 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 512300, "INC": 187400, "Others": 45200 }, "turnout": 60.1 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 498700, "INC": 198700, "Others": 52300 }, "turnout": 61.7 }
+      ],
+      "demographics": { "urban": 96, "rural": 4, "literacy": 85.3, "avgAge": 32 }
+    },
+    {
+      "id": "surat",
+      "name": "Surat",
+      "state": "Gujarat",
+      "country": "India",
+      "currentMP": "Mukesh Dalal",
+      "party": "BJP",
+      "totalVoters": 2134560,
+      "elections": [
+        { "year": 2024, "winner": "BJP", "votes": { "BJP": 678900, "Others": 45200 }, "turnout": 33.2 },
+        { "year": 2019, "winner": "BJP", "votes": { "BJP": 689700, "INC": 134200, "Others": 34100 }, "turnout": 54.7 },
+        { "year": 2014, "winner": "BJP", "votes": { "BJP": 645400, "INC": 198700, "Others": 67300 }, "turnout": 52.3 }
+      ],
+      "demographics": { "urban": 94, "rural": 6, "literacy": 87.9, "avgAge": 31 }
+    }
+  ],
+  "countries": ["India"],
+  "states": {
+    "India": ["Delhi", "Maharashtra", "Karnataka", "Uttar Pradesh", "Tamil Nadu", "West Bengal", "Rajasthan", "Gujarat"]
+  },
+  "cities": {
+    "Delhi": ["New Delhi", "North Delhi"],
+    "Maharashtra": ["Mumbai South", "Pune"],
+    "Karnataka": ["Bangalore South", "Mysore"],
+    "Uttar Pradesh": ["Varanasi", "Lucknow"],
+    "Tamil Nadu": ["Chennai Central", "Coimbatore"],
+    "West Bengal": ["Kolkata North", "Jadavpur"],
+    "Rajasthan": ["Jaipur", "Jodhpur"],
+    "Gujarat": ["Ahmedabad East", "Surat"]
+  }
+}

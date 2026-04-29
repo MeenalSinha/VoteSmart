@@ -1,0 +1,366 @@
+.mythbuster-page {
+  padding-top: 60px;
+  min-height: 100vh;
+}
+
+.mythbuster-page__header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 32px 0;
+}
+
+.mythbuster-page__header h1 {
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.mythbuster-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  margin: 40px 0;
+  align-items: flex-start;
+}
+
+.mythbuster-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Input card */
+.mythbuster-input-card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mythbuster-input-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mythbuster-input-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mythbuster-input-header h3 {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.mythbuster-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  font-size: 14px;
+  color: var(--color-ink);
+  resize: vertical;
+  line-height: 1.6;
+  min-height: 90px;
+  transition: border-color 0.15s;
+}
+
+.mythbuster-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+
+.mythbuster-textarea::placeholder { color: var(--color-ink-muted); }
+
+.mythbuster-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--color-error-light);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: var(--color-error);
+  font-size: 13px;
+}
+
+.mythbuster-input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Result */
+.mythbuster-result {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mythbuster-result--green { border-color: #bbf7d0; }
+.mythbuster-result--red { border-color: #fecaca; }
+.mythbuster-result--amber { border-color: #fde68a; }
+
+.mythbuster-verdict {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mythbuster-verdict-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.verdict-green { background: var(--color-success-light); color: var(--color-success); }
+.verdict-red { background: var(--color-error-light); color: var(--color-error); }
+.verdict-amber { background: var(--color-warning-light); color: var(--color-warning); }
+
+.mythbuster-verdict-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.mythbuster-verdict-label {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.verdict-text-green { color: var(--color-success); }
+.verdict-text-red { color: var(--color-error); }
+.verdict-text-amber { color: var(--color-warning); }
+
+.mythbuster-confidence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mythbuster-confidence-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  max-width: 200px;
+}
+
+.mythbuster-confidence-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+.fill-green { background: var(--color-success); }
+.fill-red { background: var(--color-error); }
+.fill-amber { background: var(--color-warning); }
+
+.mythbuster-claim-echo {
+  padding: 14px 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-left: 3px solid var(--color-border);
+}
+
+.mythbuster-explanation,
+.mythbuster-context {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mythbuster-explanation h4,
+.mythbuster-context h4,
+.mythbuster-sources h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-secondary);
+}
+
+.mythbuster-explanation p,
+.mythbuster-context p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-secondary);
+}
+
+.mythbuster-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mythbuster-sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mythbuster-source-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-ink-secondary);
+}
+
+.mythbuster-source-item svg { color: var(--color-accent); flex-shrink: 0; }
+
+/* History */
+.mythbuster-history {
+  padding: 20px 24px;
+}
+
+.mythbuster-history h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.mythbuster-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mythbuster-history-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mythbuster-history-item:hover {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+}
+
+.mythbuster-history-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.dot-green { background: var(--color-success); }
+.dot-red { background: var(--color-error); }
+.dot-amber { background: var(--color-warning); }
+
+/* Sidebar */
+.mythbuster-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 80px;
+}
+
+.mythbuster-sidebar .card {
+  padding: 20px;
+}
+
+.mythbuster-sidebar h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-secondary);
+}
+
+.mythbuster-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mythbuster-example-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 10px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-ink-secondary);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.5;
+  transition: all 0.12s ease;
+}
+
+.mythbuster-example-btn svg { flex-shrink: 0; margin-top: 2px; color: var(--color-accent); }
+
+.mythbuster-example-btn:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border-color: var(--color-accent-subtle);
+}
+
+.mythbuster-guide {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mythbuster-guide-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+}
+
+.guide-green { background: var(--color-success-light); }
+.guide-red { background: var(--color-error-light); }
+.guide-amber { background: var(--color-warning-light); }
+
+.mythbuster-guide-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mythbuster-guide-icon svg { width: 15px; height: 15px; }
+
+.font-medium { font-weight: 500; }
+
+@media (max-width: 900px) {
+  .mythbuster-layout { grid-template-columns: 1fr; }
+  .mythbuster-sidebar { display: none; }
+}

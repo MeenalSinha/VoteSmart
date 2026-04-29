@@ -1,0 +1,456 @@
+.constituency-page {
+  padding-top: 60px;
+  min-height: 100vh;
+}
+
+.constituency-page__header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  padding: 40px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.constituency-page__header h1 {
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+
+.constituency-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  margin: 40px 0;
+  align-items: flex-start;
+}
+
+/* Sidebar */
+.constituency-sidebar {
+  position: sticky;
+  top: 80px;
+}
+
+.constituency-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.constituency-filter h4 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.constituency-filter__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.constituency-filter__select {
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.constituency-filter__select:focus {
+  border-color: var(--color-accent);
+}
+
+.constituency-filter__loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.constituency-results {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.constituency-result-item {
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.constituency-result-item:hover {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+}
+
+.constituency-result-item.active {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent-subtle);
+}
+
+.constituency-result-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 2px;
+}
+
+/* Main content */
+.constituency-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.constituency-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  gap: 12px;
+}
+
+.constituency-empty__icon {
+  color: var(--color-ink-muted);
+  margin-bottom: 8px;
+}
+
+.constituency-empty h3 {
+  font-size: 18px;
+  color: var(--color-ink-secondary);
+}
+
+/* Detail header */
+.constituency-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+}
+
+.constituency-detail-meta h2 {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.constituency-detail-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.constituency-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.constituency-stat {
+  text-align: center;
+}
+
+.constituency-stat-value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.03em;
+}
+
+.constituency-stat-label {
+  margin-top: 2px;
+}
+
+/* Insights */
+.constituency-insights {
+  padding: 24px;
+}
+
+.constituency-insights__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.constituency-insights__header h4 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.constituency-insights__loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.constituency-highlight {
+  padding: 12px 16px;
+  background: var(--color-accent-light);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.constituency-insights__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.constituency-insight-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.constituency-insight-item:last-child {
+  border-bottom: none;
+}
+
+.constituency-insight-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-ink-secondary);
+  flex-shrink: 0;
+}
+
+.constituency-insight-item p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-ink-secondary);
+  margin: 0;
+}
+
+.constituency-trend {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+.constituency-trend.badge-green { background: var(--color-success-light); color: var(--color-success); }
+.constituency-trend.badge-red { background: var(--color-error-light); color: var(--color-error); }
+.constituency-trend.badge-amber { background: var(--color-warning-light); color: var(--color-warning); }
+
+/* Chart */
+.constituency-chart {
+  padding: 24px;
+}
+
+.constituency-chart h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.constituency-chart__wrap {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .constituency-layout {
+    grid-template-columns: 1fr;
+  }
+  .constituency-sidebar {
+    position: static;
+  }
+  .constituency-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Election Winners History Table */
+.constituency-winners-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.constituency-winners-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 80px;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--color-bg);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-secondary);
+}
+
+.constituency-winners-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 80px;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+  align-items: center;
+  transition: background 0.12s ease;
+}
+
+.constituency-winners-row:hover { background: var(--color-bg); }
+
+.constituency-winners-row.latest {
+  background: var(--color-accent-light);
+}
+
+.winners-year {
+  font-weight: 600;
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.winners-winner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-ink);
+  font-size: 12px;
+}
+
+.winners-party-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.winners-margin {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-success);
+}
+
+.winners-turnout {
+  font-size: 12px;
+  color: var(--color-ink-secondary);
+  font-weight: 500;
+}
+
+/* Demographics */
+.constituency-demographics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.demo-label {
+  margin-bottom: 8px;
+}
+
+.demo-bar-wrap {
+  width: 100%;
+}
+
+.demo-bar {
+  display: flex;
+  height: 32px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  gap: 2px;
+}
+
+.demo-bar-fill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.4s ease;
+  min-width: 60px;
+}
+
+.demo-bar-fill.urban {
+  background: var(--color-accent);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.demo-bar-fill.rural {
+  background: var(--color-success);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.demo-bar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  padding: 0 8px;
+}
+
+.demo-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.demo-stat {
+  text-align: center;
+  padding: 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.demo-stat-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+.demo-stat-lbl { margin-top: 2px; }
+
+@media (max-width: 600px) {
+  .constituency-winners-header,
+  .constituency-winners-row {
+    grid-template-columns: 70px 1fr 80px;
+  }
+  .winners-turnout { display: none; }
+  .demo-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
